@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rental Prediction Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://cms.accuweather.com/wp-content/uploads/2019/01/gettyimages-902497530b-3.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay to make text readable */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            position: relative;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            align-self: center;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1>Number of rentals to expect</h1>
+        <h2>Consider the following factors to predict the number of rentals:</h2>
+        <form action="/predict" method="post">
+            <label for="temperature">Temperature:</label>
+            <input type="text" id="temperature" name="temperature" required><br>
+
+            <label for="humidity">Humidity:</label>
+            <input type="text" id="humidity" name="humidity" required><br>
+
+            <label for="wind_speed">Wind Speed:</label>
+            <input type="text" id="wind_speed" name="wind_speed" required><br>
+
+            <label>Weather Situation:</label><br>
+            <input type="radio" id="weather_situation_clear" name="weather_situation" value="clear" required>
+            <label for="weather_situation_clear">Clear</label><br>
+            <input type="radio" id="weather_situation_few_clouds" name="weather_situation" value="few clouds" required>
+            <label for="weather_situation_few_clouds">Few clouds</label><br>
+            <input type="radio" id="weather_situation_partly_cloudy" name="weather_situation" value="partly cloudy" required>
+            <label for="weather_situation_partly_cloudy">Partly cloudy</label><br>
+
+            <label for="month">Month:</label>
+            <input type="text" id="month" name="month" required><br>
+
+            <label for="holiday">Holiday (0: No, 1: Yes):</label>
+            <input type="text" id="holiday" name="holiday" required><br>
+
+            <label for="week_day">Week Day (0: Sunday, 1: Monday, ..., 6: Saturday):</label>
+            <input type="text" id="week_day" name="week_day" required><br>
+
+            <label for="working_day">Working Day (0: No, 1: Yes):</label>
+            <input type="text" id="working_day" name="working_day" required><br>
+
+            <label>Season:</label><br>
+            <input type="radio" id="season_fall" name="season" value="fall" required>
+            <label for="season_fall">Fall</label><br>
+            <input type="radio" id="season_spring" name="season" value="spring" required>
+            <label for="season_spring">Spring</label><br>
+            <input type="radio" id="season_summer" name="season" value="summer" required>
+            <label for="season_summer">Summer</label><br>
+            <input type="radio" id="season_winter" name="season" value="winter" required>
+            <label for="season_winter">Winter</label><br>
+
+            <button type="submit">Predict</button>
+        </form>
+        {% if prediction_text %}
+            <h2>{{ prediction_text }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
